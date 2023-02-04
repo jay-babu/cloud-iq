@@ -16,7 +16,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 package main
 
-import "github.com/jay-babu/IronMaiden/cmd"
+import "github.com/jay-babu/ironMaiden/cmd"
 
 func main() {
 	cmd.Execute()
