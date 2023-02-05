@@ -1,13 +1,17 @@
 /*
 Copyright © 2023 NAME HERE <EMAIL ADDRESS>
-*/
-package aws
+*/package aws
 
 import (
+	"context"
 	"fmt"
 
+	"github.com/aws/aws-sdk-go-v2/aws"
+	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/spf13/cobra"
 )
+
+var AwsCfg aws.Config
 
 // awsCmd represents the aws command
 var AwsCmd = &cobra.Command{
@@ -25,6 +29,11 @@ to quickly create a Cobra application.`,
 }
 
 func init() {
+	AwsCfg, err := config.LoadDefaultConfig(
+		context.Background(),
+		config.WithSharedConfigProfile("default"),
+	)
+	cobra.CheckErr(err)
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
