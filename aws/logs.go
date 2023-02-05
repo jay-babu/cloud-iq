@@ -20,7 +20,7 @@ func DefaultAwsOldParams() awsLogsOldParams {
 }
 
 func AwsLogsOld(ctx *gin.Context, params awsLogsOldParams) {
-	r, err := client.DescribeLogGroups(ctx, nil)
+	r, err := cwLogsClient.DescribeLogGroups(ctx, nil)
 	if err != nil {
 		ctx.Error(err)
 		return
@@ -47,10 +47,13 @@ func AwsLogsOld(ctx *gin.Context, params awsLogsOldParams) {
 			}
 
 			if noRetentionDays || retentionTooLong() {
-				_, err = client.PutRetentionPolicy(ctx, &cloudwatchlogs.PutRetentionPolicyInput{
-					LogGroupName:    l.LogGroupName,
-					RetentionInDays: &retention,
-				})
+				_, err = cwLogsClient.PutRetentionPolicy(
+					ctx,
+					&cloudwatchlogs.PutRetentionPolicyInput{
+						LogGroupName:    l.LogGroupName,
+						RetentionInDays: &retention,
+					},
+				)
 				if err != nil {
 					ctx.Error(err)
 					return
@@ -64,7 +67,7 @@ func AwsLogsOld(ctx *gin.Context, params awsLogsOldParams) {
 		}
 
 		log.SLogger.Debug("looping again")
-		r, err = client.DescribeLogGroups(ctx, &cloudwatchlogs.DescribeLogGroupsInput{
+		r, err = cwLogsClient.DescribeLogGroups(ctx, &cloudwatchlogs.DescribeLogGroupsInput{
 			NextToken: r.NextToken,
 		})
 		if err != nil {

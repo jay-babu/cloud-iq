@@ -5,12 +5,14 @@ import (
 
 	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/service/cloudwatchlogs"
+	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
 	"github.com/aws/aws-sdk-go/aws"
 )
 
 var (
-	cfg    aws.Config
-	client *cloudwatchlogs.Client
+	cfg          aws.Config
+	cwLogsClient *cloudwatchlogs.Client
+	ddbClient    *dynamodb.Client
 )
 
 func init() {
@@ -18,8 +20,10 @@ func init() {
 		context.Background(),
 		config.WithSharedConfigProfile("default"),
 	)
-	client = cloudwatchlogs.NewFromConfig(cfg)
 	if err != nil {
 		panic(err)
 	}
+
+	cwLogsClient = cloudwatchlogs.NewFromConfig(cfg)
+	ddbClient = dynamodb.NewFromConfig(cfg)
 }
