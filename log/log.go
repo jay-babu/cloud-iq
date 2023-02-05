@@ -13,6 +13,6 @@ var (
 func init() {
 	config := zap.NewDevelopmentConfig()
 	config.EncoderConfig.EncodeLevel = zapcore.CapitalColorLevelEncoder
-	Logger, _ := config.Build()
+	Logger, _ = config.Build()
 	SLogger = Logger.Sugar()
 }

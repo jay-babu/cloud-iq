@@ -6,14 +6,19 @@ import (
 	"time"
 
 	"github.com/gin-contrib/requestid"
+	ginzap "github.com/gin-contrib/zap"
 	"github.com/gin-gonic/gin"
 
 	"github.com/jay-babu/ironMaiden/aws"
+	"github.com/jay-babu/ironMaiden/log"
 )
 
 func main() {
-	r := gin.Default()
+	r := gin.New()
 	r.Use(requestid.New())
+
+	r.Use(ginzap.Ginzap(log.Logger, time.RFC3339, true))
+	r.Use(ginzap.RecoveryWithZap(log.Logger, true))
 
 	r.GET("/ping", func(ctx *gin.Context) {
 		ctx.JSON(http.StatusOK, gin.H{
@@ -28,12 +33,12 @@ func main() {
 
 	r.POST("/aws/logs/old", func(ctx *gin.Context) {
 		params := aws.DefaultAwsOldParams()
-		ctx.BindJSON(&params)
+		_ = ctx.ShouldBindJSON(&params)
 		aws.AwsLogsOld(ctx, params)
 	})
 	r.POST("/aws/ddb/unused", func(ctx *gin.Context) {
 		params := aws.DefaultAwsDdbUnused()
-		ctx.BindJSON(&params)
+		_ = ctx.ShouldBindJSON(&params)
 		aws.AwsDdbUnused(ctx, params)
 	})
 	r.Run()

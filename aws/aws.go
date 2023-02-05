@@ -3,11 +3,11 @@ package aws
 import (
 	"context"
 
+	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/service/cloudwatch"
 	"github.com/aws/aws-sdk-go-v2/service/cloudwatchlogs"
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
-	"github.com/aws/aws-sdk-go/aws"
 )
 
 var (
@@ -18,10 +18,11 @@ var (
 )
 
 func init() {
-	cfg, err := config.LoadDefaultConfig(
+	cfg1, err := config.LoadDefaultConfig(
 		context.Background(),
 		config.WithSharedConfigProfile("default"),
 	)
+	cfg = cfg1
 	if err != nil {
 		panic(err)
 	}
