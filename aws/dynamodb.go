@@ -74,12 +74,12 @@ func AwsDdbUnused(ctx *gin.Context, param awsDdbUnusedParams) {
 			)
 		} else if tableHasRead && tableHasWrite {
 			log.SLogger.Infof(
-				"Table %s has not been read from, but is written to. Stop writing to it to safely delete it.\n",
+				"Table %s is currently read and written too.\n",
 				tableName,
 			)
 		} else if !tableHasRead && !tableHasWrite {
 			log.SLogger.Infof(
-				"Table %s has not been read or written to. Attempting to delete Table",
+				"Table %s has not been read or written to. Attempting to delete Table\n",
 				tableName,
 			)
 			backUpStatus, err := isBackedUp(ctx, tableDescription)
