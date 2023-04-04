@@ -36,10 +36,10 @@ func main() {
 		_ = ctx.ShouldBindJSON(&params)
 		aws.AwsLogsOld(ctx, params)
 	})
-	r.POST("/aws/ddb/unused", func(ctx *gin.Context) {
-		params := aws.DefaultAwsDdbUnused()
-		_ = ctx.ShouldBindJSON(&params)
-		aws.AwsDdbUnused(ctx, params)
-	})
+	// r.POST("/aws/ddb/unused", func(ctx *gin.Context) {
+	// 	params := aws.DefaultAwsDdbUnused()
+	// 	_ = ctx.ShouldBindJSON(&params)
+	// 	aws.AwsDdbUnused(ctx, params)
+	// })
 	r.Run()
 }

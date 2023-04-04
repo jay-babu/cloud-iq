@@ -43,7 +43,7 @@ func AwsLogsOld(ctx *gin.Context, params awsLogsOldParams) {
 					retention,
 				)
 			} else if retentionTooLong() {
-				log.SLogger.Infof("Retention Policy for Log Group %s is Too Low: %d days. Setting to %d days", *l.Arn, *l.RetentionInDays, retention)
+				log.SLogger.Infof("Retention Policy for Log Group %s is Too High: %d days. Setting to %d days", *l.Arn, *l.RetentionInDays, retention)
 			}
 
 			if noRetentionDays || retentionTooLong() {
@@ -66,7 +66,6 @@ func AwsLogsOld(ctx *gin.Context, params awsLogsOldParams) {
 			break
 		}
 
-		log.SLogger.Debug("looping again")
 		r, err = cwLogsClient.DescribeLogGroups(ctx, &cloudwatchlogs.DescribeLogGroupsInput{
 			NextToken: r.NextToken,
 		})
