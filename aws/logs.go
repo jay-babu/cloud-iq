@@ -6,7 +6,7 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/cloudwatchlogs"
 	"github.com/gin-gonic/gin"
 
-	"github.com/jay-babu/ironMaiden/log"
+	"github.com/jay-babu/cloud-cleaner/log"
 )
 
 type awsLogsOldParams struct {

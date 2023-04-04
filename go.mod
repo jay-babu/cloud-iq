@@ -1,4 +1,4 @@
-module github.com/jay-babu/ironMaiden
+module github.com/jay-babu/cloud-cleaner
 
 go 1.20
 

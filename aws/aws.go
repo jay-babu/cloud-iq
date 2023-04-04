@@ -22,7 +22,7 @@ var (
 
 func init() {
 	profile := "default"
-	if name, ok := os.LookupEnv("profile"); ok {
+	if name, ok := os.LookupEnv("PROFILE"); ok {
 		profile = name
 	}
 	cfg1, err := config.LoadDefaultConfig(

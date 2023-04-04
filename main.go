@@ -9,8 +9,8 @@ import (
 	ginzap "github.com/gin-contrib/zap"
 	"github.com/gin-gonic/gin"
 
-	"github.com/jay-babu/ironMaiden/aws"
-	"github.com/jay-babu/ironMaiden/log"
+	"github.com/jay-babu/cloud-cleaner/aws"
+	"github.com/jay-babu/cloud-cleaner/log"
 )
 
 func main() {
