@@ -4,7 +4,8 @@ on:
   push:
     # https://stackoverflow.com/a/61066906
     tags:
-      - 'v*'
+      - '*'
+  workflow_dispatch:
 
 permissions:
   contents: write
