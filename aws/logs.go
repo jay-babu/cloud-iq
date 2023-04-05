@@ -30,11 +30,9 @@ func AwsLogsOld(ctx *gin.Context, params awsLogsOldParams) {
 	for {
 		for _, l := range r.LogGroups {
 			noRetentionDays := l.RetentionInDays == nil
-			retentionTooLong := func() bool {
-				return time.Now().
-					AddDate(0, 0, -int(*l.RetentionInDays)).
-					Before(time.Now().AddDate(0, 0, -(int(retention) + 1)))
-			}
+			retentionTooLong := time.Now().
+				AddDate(0, 0, -int(*l.RetentionInDays)).
+				Before(time.Now().AddDate(0, 0, -(int(retention) + 1)))
 
 			if noRetentionDays {
 				log.SLogger.Infof(
@@ -42,11 +40,11 @@ func AwsLogsOld(ctx *gin.Context, params awsLogsOldParams) {
 					*l.Arn,
 					retention,
 				)
-			} else if retentionTooLong() {
+			} else if retentionTooLong {
 				log.SLogger.Infof("Retention Policy for Log Group %s is Too High: %d days. Setting to %d days", *l.Arn, *l.RetentionInDays, retention)
 			}
 
-			if noRetentionDays || retentionTooLong() {
+			if noRetentionDays || retentionTooLong {
 				_, err = cwLogsClient.PutRetentionPolicy(
 					ctx,
 					&cloudwatchlogs.PutRetentionPolicyInput{

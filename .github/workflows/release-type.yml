@@ -20,8 +20,6 @@ jobs:
           release-type: go
           package-name: cloud-cleaner
           pull-request-title-pattern: "build${scope}: release${component} ${version}"
-          prerelease: true
           bump-minor-pre-major: true
           bump-patch-for-minor-pre-major: true
-          release-as: "0.0.0"
 
