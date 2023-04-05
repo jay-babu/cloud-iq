@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.5](https://github.com/jay-babu/cloud-cleaner/compare/v0.0.4...v0.0.5) (2023-04-05)
+
+
+### Features
+
+* **ci:** automated releases ([f70e352](https://github.com/jay-babu/cloud-cleaner/commit/f70e3526d8f5fee1a9358af4b7c1ba68c2d5c170))
+
 ## [0.0.3](https://github.com/jay-babu/cloud-cleaner/compare/v0.0.2...v0.0.3) (2023-04-05)
 
 
