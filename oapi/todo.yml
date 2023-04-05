@@ -35,7 +35,10 @@ components:
 paths:
   /aws/log_group/retention:
     post:
-      description: Modifies Log Group Retention in CloudWatch
+      description: |
+        Modifies Log Group Retention in CloudWatch.
+        Changes retention policy in CloudWatch Log Groups to be no greater than `retentionInDays` parameter.
+        Log Groups with a smaller expiration date are not modified.
       operationId: logGroupRetention
       requestBody:
         description: Modify Log Group in CloudWatch
