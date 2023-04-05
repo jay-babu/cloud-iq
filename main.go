@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"net/http"
 	"time"
 
@@ -9,9 +8,26 @@ import (
 	ginzap "github.com/gin-contrib/zap"
 	"github.com/gin-gonic/gin"
 
+	middleware "github.com/deepmap/oapi-codegen/pkg/gin-middleware"
+
 	"github.com/jay-babu/cloud-cleaner/aws"
 	"github.com/jay-babu/cloud-cleaner/log"
+	"github.com/jay-babu/cloud-cleaner/oapi"
 )
+
+type ServerImpl struct{}
+
+var _ oapi.ServerInterface = (*ServerImpl)(nil)
+
+func (ServerImpl) LogGroupRetention(c *gin.Context) {
+	params := aws.DefaultAwsOldParams()
+
+	_ = c.ShouldBind(&params)
+	aws.AwsLogsOld(c, params)
+	if l := len(c.Errors); l == 0 {
+		c.Status(http.StatusNoContent)
+	}
+}
 
 func main() {
 	r := gin.New()
@@ -20,26 +36,20 @@ func main() {
 	r.Use(ginzap.Ginzap(log.Logger, time.RFC3339, true))
 	r.Use(ginzap.RecoveryWithZap(log.Logger, true))
 
-	r.GET("/ping", func(ctx *gin.Context) {
-		ctx.JSON(http.StatusOK, gin.H{
-			"message": "pong",
-			"time":    fmt.Sprint(time.Now().Local()),
-		})
-	})
+	swagger, err := oapi.GetSwagger()
+	if err != nil {
+		// This should never error
+		panic("there was an error getting the swagger")
+	}
 
-	r.GET("/panic", func(ctx *gin.Context) {
-		panic("Expected a panic")
-	})
+	// Clear out the servers array in the swagger spec. It is recommended to do this so that it skips validating
+	// that server names match.
+	swagger.Servers = nil
 
-	r.POST("/aws/logs/old", func(ctx *gin.Context) {
-		params := aws.DefaultAwsOldParams()
-		_ = ctx.ShouldBindJSON(&params)
-		aws.AwsLogsOld(ctx, params)
-	})
-	// r.POST("/aws/ddb/unused", func(ctx *gin.Context) {
-	// 	params := aws.DefaultAwsDdbUnused()
-	// 	_ = ctx.ShouldBindJSON(&params)
-	// 	aws.AwsDdbUnused(ctx, params)
-	// })
+	r.Use(middleware.OapiRequestValidator(swagger))
+
+	var myAPI ServerImpl
+
+	r = oapi.RegisterHandlers(r, myAPI)
 	r.Run()
 }

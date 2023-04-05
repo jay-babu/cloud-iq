@@ -1,28 +1,27 @@
 package aws
 
 import (
+	"net/http"
 	"time"
 
 	"github.com/aws/aws-sdk-go-v2/service/cloudwatchlogs"
 	"github.com/gin-gonic/gin"
 
 	"github.com/jay-babu/cloud-cleaner/log"
+	"github.com/jay-babu/cloud-cleaner/oapi"
 )
 
-type awsLogsOldParams struct {
-	RetentionInDays int32 `json:"retentionInDays"`
-}
-
-func DefaultAwsOldParams() awsLogsOldParams {
-	return awsLogsOldParams{
-		RetentionInDays: 30,
+func DefaultAwsOldParams() oapi.AwsLogRetentionInput {
+	defaultRetention := int32(8)
+	return oapi.AwsLogRetentionInput{
+		RetentionInDays: &defaultRetention,
 	}
 }
 
-func AwsLogsOld(ctx *gin.Context, params awsLogsOldParams) {
+func AwsLogsOld(ctx *gin.Context, params oapi.AwsLogRetentionInput) {
 	r, err := cwLogsClient.DescribeLogGroups(ctx, nil)
 	if err != nil {
-		ctx.Error(err)
+		ctx.AbortWithError(http.StatusInternalServerError, err)
 		return
 	}
 
@@ -30,9 +29,11 @@ func AwsLogsOld(ctx *gin.Context, params awsLogsOldParams) {
 	for {
 		for _, l := range r.LogGroups {
 			noRetentionDays := l.RetentionInDays == nil
-			retentionTooLong := time.Now().
-				AddDate(0, 0, -int(*l.RetentionInDays)).
-				Before(time.Now().AddDate(0, 0, -(int(retention) + 1)))
+			retentionTooLong := func() bool {
+				return time.Now().
+					AddDate(0, 0, -int(*l.RetentionInDays)).
+					Before(time.Now().AddDate(0, 0, -(int(*retention) + 1)))
+			}
 
 			if noRetentionDays {
 				log.SLogger.Infof(
@@ -40,20 +41,20 @@ func AwsLogsOld(ctx *gin.Context, params awsLogsOldParams) {
 					*l.Arn,
 					retention,
 				)
-			} else if retentionTooLong {
+			} else if retentionTooLong() {
 				log.SLogger.Infof("Retention Policy for Log Group %s is Too High: %d days. Setting to %d days", *l.Arn, *l.RetentionInDays, retention)
 			}
 
-			if noRetentionDays || retentionTooLong {
+			if noRetentionDays || retentionTooLong() {
 				_, err = cwLogsClient.PutRetentionPolicy(
 					ctx,
 					&cloudwatchlogs.PutRetentionPolicyInput{
 						LogGroupName:    l.LogGroupName,
-						RetentionInDays: &retention,
+						RetentionInDays: retention,
 					},
 				)
 				if err != nil {
-					ctx.Error(err)
+					ctx.AbortWithError(http.StatusInternalServerError, err)
 					return
 				}
 			}
@@ -68,7 +69,7 @@ func AwsLogsOld(ctx *gin.Context, params awsLogsOldParams) {
 			NextToken: r.NextToken,
 		})
 		if err != nil {
-			ctx.Error(err)
+			ctx.AbortWithError(http.StatusInternalServerError, err)
 			return
 		}
 	}
