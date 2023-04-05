@@ -1,9 +1,10 @@
 name: release
 
 on:
-  release:
+  push:
     # https://stackoverflow.com/a/61066906
-    types: [published]
+    tags:
+      - 'v*'
 
 permissions:
   contents: write
