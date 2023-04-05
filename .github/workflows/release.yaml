@@ -1,35 +1,44 @@
-name: release
+name: goreleaser
+
 
 on:
   push:
-    # https://stackoverflow.com/a/61066906
+    # run only against tags
     tags:
       - '*'
-  workflow_dispatch:
+
 
 permissions:
+
   contents: write
-  packages: write
+  # packages: write
+  # issues: write
 
 jobs:
-  publishmatrix:
-    name: Release Go Binary
-    runs-on: ubuntu-latest
-    strategy:
+  goreleaser:
 
-      matrix:
-        goos: [darwin, linux]
-        goarch: [amd64, arm64]
+    runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - uses: wangyoucao577/go-release-action@v1
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        goos: ${{ matrix.goos }}
-        goarch: ${{ matrix.goarch }}
-        binary_name: "cloud-cleaner"
-        extra_files: LICENSE README.md
-        # The default naming pattern uses the release name
-        # Which makes difficult for scripts to download the correct version
-        asset_name: cloud-cleaner-${{ matrix.goos }}-${{ matrix.goarch }}
-        pre_command: export CGO_ENABLED=0
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - run: git fetch --force --tags
+
+      - uses: actions/setup-go@v4
+        with:
+          go-version: stable
+      # More assembly might be required: Docker logins, GPG, etc. It all depends
+      # on your needs.
+      - uses: goreleaser/goreleaser-action@v4
+        with:
+          # either 'goreleaser' (default) or 'goreleaser-pro':
+          distribution: goreleaser
+          version: latest
+          args: release --clean
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Your GoReleaser Pro key, if you are using the 'goreleaser-pro'
+
+          # distribution:
+          # GORELEASER_KEY: ${{ secrets.GORELEASER_KEY }}
+
