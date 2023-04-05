@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.3](https://github.com/jay-babu/cloud-cleaner/compare/v0.0.2...v0.0.3) (2023-04-05)
+
+
+### Features
+
+* goreleaser init ([cc850d4](https://github.com/jay-babu/cloud-cleaner/commit/cc850d40a1dc8a4b09e264954943a0ac5ad6f3a8))
+
 ## [0.0.2](https://github.com/jay-babu/cloud-cleaner/compare/v0.0.1...v0.0.2) (2023-04-05)
 
 
