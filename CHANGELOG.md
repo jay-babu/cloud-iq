@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.1](https://github.com/jay-babu/cloud-cleaner/compare/v0.0.0...v0.0.1) (2023-04-05)
+
+
+### Features
+
+* retentionTooLong is a variable now ([53609f1](https://github.com/jay-babu/cloud-cleaner/commit/53609f155ed44acae3b0a81c1ca26ee19b61041d))
+
 ## 0.0.0 (2023-04-05)
 
 
