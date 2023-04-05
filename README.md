@@ -19,4 +19,5 @@ Latest Swagger Spec is available at https://github.com/jay-babu/cloud-cleaner/bl
 - Assumes AWS Credentials from a profile. By default, it looks for a profile named `default`.
   - To override the profile, set an environment variable `PROFILE` to the desired profile.
 - `./cloud-cleaner` if downloaded release file
-- `go run main` if running from source
+- `make run` if running from source
+- `make watch` tracks for file changes using `air`
