@@ -8,5 +8,18 @@ type AwsLogRetentionInput struct {
 	RetentionInDays *int32 `json:"retentionInDays,omitempty"`
 }
 
+// AwsLogRetentionOutput defines model for AwsLogRetentionOutput.
+type AwsLogRetentionOutput struct {
+	Messages []Message `json:"messages"`
+}
+
+// Message defines model for Message.
+type Message struct {
+	Arn           string `json:"arn"`
+	Message       string `json:"message"`
+	NewValue      int32  `json:"newValue"`
+	PreviousValue int32  `json:"previousValue"`
+}
+
 // LogGroupRetentionJSONRequestBody defines body for LogGroupRetention for application/json ContentType.
 type LogGroupRetentionJSONRequestBody = AwsLogRetentionInput

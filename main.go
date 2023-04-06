@@ -23,10 +23,13 @@ func (ServerImpl) LogGroupRetention(c *gin.Context) {
 	params := aws.DefaultAwsOldParams()
 
 	_ = c.ShouldBind(&params)
-	aws.AwsLogsOld(c, params)
-	if l := len(c.Errors); l == 0 {
-		c.Status(http.StatusNoContent)
+	output, err := aws.AwsLogsOld(c, params)
+	if err != nil {
+		c.AbortWithError(http.StatusInternalServerError, err)
+		c.JSON(http.StatusInternalServerError, c.Errors.Errors())
+		return
 	}
+	c.JSON(http.StatusOK, output)
 }
 
 func main() {

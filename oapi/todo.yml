@@ -19,6 +19,28 @@ components:
           type: integer
           format: int32
           default: 180
+    AwsLogRetentionOutput:
+      type: object
+      properties:
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/Message'
+      required: [messages]
+    Message:
+      type: object
+      properties:
+        message:
+          type: string
+        arn:
+          type: string
+        previousValue:
+          type: integer
+          format: int32
+        newValue:
+          type: integer
+          format: int32
+      required: [message, arn, previousValue, newValue]
     Error:
       type: object
       properties:
@@ -47,8 +69,12 @@ paths:
             schema:
               $ref: '#/components/schemas/AwsLogRetentionInput'
       responses:
-        '204':
+        '200':
           description: Log Group Retention Saved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AwsLogRetentionOutput'
         '400':
           description: Bad Request.
         '5XX':

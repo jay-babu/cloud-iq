@@ -1,7 +1,7 @@
 package aws
 
 import (
-	"net/http"
+	"fmt"
 	"time"
 
 	"github.com/aws/aws-sdk-go-v2/service/cloudwatchlogs"
@@ -18,14 +18,14 @@ func DefaultAwsOldParams() oapi.AwsLogRetentionInput {
 	}
 }
 
-func AwsLogsOld(ctx *gin.Context, params oapi.AwsLogRetentionInput) {
+func AwsLogsOld(ctx *gin.Context, params oapi.AwsLogRetentionInput) (oapi.AwsLogRetentionOutput, error) {
 	r, err := cwLogsClient.DescribeLogGroups(ctx, nil)
 	if err != nil {
-		ctx.AbortWithError(http.StatusInternalServerError, err)
-		return
+		return oapi.AwsLogRetentionOutput{}, err
 	}
 
 	retention := params.RetentionInDays
+	messages := make([]oapi.Message, 0, len(r.LogGroups))
 	for {
 		for _, l := range r.LogGroups {
 			noRetentionDays := l.RetentionInDays == nil
@@ -46,6 +46,12 @@ func AwsLogsOld(ctx *gin.Context, params oapi.AwsLogRetentionInput) {
 			}
 
 			if noRetentionDays || retentionTooLong() {
+				previousValue := int32(0)
+				if !noRetentionDays {
+					previousValue = *l.RetentionInDays
+				}
+				newValue := *retention
+				arn := *l.Arn
 				_, err = cwLogsClient.PutRetentionPolicy(
 					ctx,
 					&cloudwatchlogs.PutRetentionPolicyInput{
@@ -54,11 +60,15 @@ func AwsLogsOld(ctx *gin.Context, params oapi.AwsLogRetentionInput) {
 					},
 				)
 				if err != nil {
-					ctx.AbortWithError(http.StatusInternalServerError, err)
-					return
+					return oapi.AwsLogRetentionOutput{}, err
 				}
+				messages = append(messages, oapi.Message{
+					Arn:           arn,
+					PreviousValue: previousValue,
+					NewValue:      newValue,
+					Message:       fmt.Sprintf("Log Group Retention Policy modified to %d days.", newValue),
+				})
 			}
-
 		}
 
 		if r.NextToken == nil {
@@ -69,10 +79,11 @@ func AwsLogsOld(ctx *gin.Context, params oapi.AwsLogRetentionInput) {
 			NextToken: r.NextToken,
 		})
 		if err != nil {
-			ctx.AbortWithError(http.StatusInternalServerError, err)
-			return
+			return oapi.AwsLogRetentionOutput{}, err
 		}
 	}
+
+	return oapi.AwsLogRetentionOutput{Messages: messages}, nil
 
 	// if Log Group has no Log Streams and was created before a certain date
 	// if len(logStreams.LogStreams) == 0 &&
