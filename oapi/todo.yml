@@ -24,13 +24,15 @@ info:
 
     This repository is a a backend server.
 
-    Latest Swagger Spec is available at https://github.com/jay-babu/auto-tune/blob/main/oapi/todo.yml
+    Latest Swagger Spec is available at [https://github.com/jay-babu/auto-tune/blob/main/oapi/todo.yml](https://github.com/jay-babu/auto-tune/blob/main/oapi/todo.yml)
 
     ## Supported Services
     - CloudWatch Log Groups
       - Retention Policy
 
     ## Running Locally
+    
+    Repo Link: [https://github.com/jay-babu/auto-tune](https://github.com/jay-babu/auto-tune)
 
     - Assumes AWS Credentials from a profile. By default, it looks for a profile named `default`.
       - To override the profile, set an environment variable `PROFILE` to the desired profile.

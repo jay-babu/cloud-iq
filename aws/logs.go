@@ -12,7 +12,7 @@ import (
 )
 
 func DefaultAwsOldParams() oapi.AwsLogRetentionInput {
-	defaultRetention := int32(8)
+	defaultRetention := int32(180)
 	return oapi.AwsLogRetentionInput{
 		RetentionInDays: &defaultRetention,
 	}
