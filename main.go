@@ -10,6 +10,7 @@ import (
 
 	middleware "github.com/deepmap/oapi-codegen/pkg/gin-middleware"
 
+	"github.com/gin-contrib/cors"
 	"github.com/jay-babu/auto-tune/aws"
 	"github.com/jay-babu/auto-tune/log"
 	"github.com/jay-babu/auto-tune/oapi"
@@ -37,6 +38,7 @@ func main() {
 	r.Use(requestid.New())
 
 	r.Use(ginzap.Ginzap(log.Logger, time.RFC3339, true))
+	r.Use(cors.Default())
 	r.Use(ginzap.RecoveryWithZap(log.Logger, true))
 
 	swagger, err := oapi.GetSwagger()

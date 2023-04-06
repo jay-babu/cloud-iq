@@ -30,12 +30,18 @@ info:
     - CloudWatch Log Groups
       - Retention Policy
 
+    ## Calling Rest Endpoint
+
+    Requests can be made to either of these endpoints.
+
+    - [https://auto-tune-api.pateljay.io](https://auto-tune-api.pateljay.io)
+    - [https://auto-tune.onrender.com](https://auto-tune.onrender.com)
+
     ## Running Locally
     
     Repo Link: [https://github.com/jay-babu/auto-tune](https://github.com/jay-babu/auto-tune)
 
-    - Assumes AWS Credentials from a profile. By default, it looks for a profile named `default`.
-      - To override the profile, set an environment variable `PROFILE` to the desired profile.
+    - Provide accessKeyID, secretAccessKey, region, sessionToken as part of the request body.
     - `./auto-tune` if downloaded release file
     - `make run` if running from source
     - `make watch` tracks for file changes using `air`
@@ -43,7 +49,9 @@ info:
 
 servers:
 
-  - url: http://localhost:32208/
+  - url: https://auto-tune-api.pateljay.io
+  - url: https://auto-tune.onrender.com
+  - url: http://localhost:8080
 
 components:
 
