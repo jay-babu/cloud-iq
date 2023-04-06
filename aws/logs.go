@@ -33,6 +33,10 @@ func AwsLogsOld(
 		),
 		config.WithRegion(params.Region),
 	)
+	cfg.DefaultsMode = aws.DefaultsModeStandard
+	cfg.RetryMode = aws.RetryModeAdaptive
+	cfg.RetryMaxAttempts = 2
+
 	if err != nil {
 		return oapi.AwsLogRetentionOutput{}, err
 	}
