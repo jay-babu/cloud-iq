@@ -2,8 +2,42 @@ openapi: 3.0.0
 
 info:
   title: Auto Tune
-  description: auto-tune's job is very simple. It is to clean and optimize cloud resources.
-  version: 0.0.5
+  description: |
+    # Overview
+
+    auto-tune's job is very simple. It is to clean and optimize cloud resources.
+    This is possible by modifying various cloud services configuration to a more optimal cost
+    such as decreasing retention rates, optimizing requested hardware, enabling on_demand usage.
+
+    Currently, only AWS CloudWatch Log Group Optimization is supported.
+
+    # HIGHLY EXPERIMENTAL / ALPHA Stage
+
+    It is recommended that the AWS Role given to this software contain minimal permission.
+    This package is subject to breaking changes at anytime.
+
+    Currently the only permissions used are:
+    - logs:PutRetentionPolicy
+    - logs:DescribeLogGroups
+
+    ## How to Use
+
+    This repository is a a backend server.
+
+    Latest Swagger Spec is available at https://github.com/jay-babu/auto-tune/blob/main/oapi/todo.yml
+
+    ## Supported Services
+    - CloudWatch Log Groups
+      - Retention Policy
+
+    ## Running Locally
+
+    - Assumes AWS Credentials from a profile. By default, it looks for a profile named `default`.
+      - To override the profile, set an environment variable `PROFILE` to the desired profile.
+    - `./auto-tune` if downloaded release file
+    - `make run` if running from source
+    - `make watch` tracks for file changes using `air`
+  version: 0.0.0
 
 servers:
 
