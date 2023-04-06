@@ -7,8 +7,8 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/cloudwatchlogs"
 	"github.com/gin-gonic/gin"
 
-	"github.com/jay-babu/cloud-cleaner/log"
-	"github.com/jay-babu/cloud-cleaner/oapi"
+	"github.com/jay-babu/auto-tune/log"
+	"github.com/jay-babu/auto-tune/oapi"
 )
 
 func DefaultAwsOldParams() oapi.AwsLogRetentionInput {

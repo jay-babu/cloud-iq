@@ -9,7 +9,7 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
 	"github.com/gin-gonic/gin"
 
-	"github.com/jay-babu/cloud-cleaner/log"
+	"github.com/jay-babu/auto-tune/log"
 )
 
 func init() {

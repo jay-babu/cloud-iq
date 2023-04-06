@@ -1,4 +1,4 @@
-module github.com/jay-babu/cloud-cleaner
+module github.com/jay-babu/auto-tune
 
 go 1.20
 

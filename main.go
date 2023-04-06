@@ -10,9 +10,9 @@ import (
 
 	middleware "github.com/deepmap/oapi-codegen/pkg/gin-middleware"
 
-	"github.com/jay-babu/cloud-cleaner/aws"
-	"github.com/jay-babu/cloud-cleaner/log"
-	"github.com/jay-babu/cloud-cleaner/oapi"
+	"github.com/jay-babu/auto-tune/aws"
+	"github.com/jay-babu/auto-tune/log"
+	"github.com/jay-babu/auto-tune/oapi"
 )
 
 type ServerImpl struct{}

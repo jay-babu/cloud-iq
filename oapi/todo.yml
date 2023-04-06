@@ -1,8 +1,8 @@
 openapi: 3.0.0
 
 info:
-  title: Cloud Cleaner
-  description: cloud-cleaner's job is very simple. It is to clean and optimize cloud resources.
+  title: Auto Tune
+  description: auto-tune's job is very simple. It is to clean and optimize cloud resources.
   version: 0.0.5
 
 servers:
