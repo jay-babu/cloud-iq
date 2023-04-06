@@ -4,6 +4,9 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/aws/aws-sdk-go-v2/aws"
+	"github.com/aws/aws-sdk-go-v2/config"
+	"github.com/aws/aws-sdk-go-v2/credentials"
 	"github.com/aws/aws-sdk-go-v2/service/cloudwatchlogs"
 	"github.com/gin-gonic/gin"
 
@@ -18,7 +21,23 @@ func DefaultAwsOldParams() oapi.AwsLogRetentionInput {
 	}
 }
 
-func AwsLogsOld(ctx *gin.Context, params oapi.AwsLogRetentionInput) (oapi.AwsLogRetentionOutput, error) {
+func AwsLogsOld(
+	ctx *gin.Context,
+	params oapi.AwsLogRetentionInput,
+) (oapi.AwsLogRetentionOutput, error) {
+	cfg, err := config.LoadDefaultConfig(
+		ctx,
+		config.WithCredentialsProvider(
+			aws.CredentialsProvider(credentials.NewStaticCredentialsProvider(params.AccessKeyID,
+				params.SecretAccessKey, params.SessionToken)),
+		),
+		config.WithRegion(params.Region),
+	)
+	if err != nil {
+		return oapi.AwsLogRetentionOutput{}, err
+	}
+	cwLogsClient := cloudwatchlogs.NewFromConfig(cfg)
+
 	r, err := cwLogsClient.DescribeLogGroups(ctx, nil)
 	if err != nil {
 		return oapi.AwsLogRetentionOutput{}, err
@@ -66,7 +85,10 @@ func AwsLogsOld(ctx *gin.Context, params oapi.AwsLogRetentionInput) (oapi.AwsLog
 					Arn:           arn,
 					PreviousValue: previousValue,
 					NewValue:      newValue,
-					Message:       fmt.Sprintf("Log Group Retention Policy modified to %d days.", newValue),
+					Message: fmt.Sprintf(
+						"Log Group Retention Policy modified to %d days.",
+						newValue,
+					),
 				})
 			}
 		}

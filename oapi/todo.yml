@@ -55,6 +55,15 @@ components:
           type: integer
           format: int32
           default: 180
+        accessKeyID:
+          type: string
+        secretAccessKey:
+          type: string
+        sessionToken:
+          type: string
+        region:
+          type: string
+      required: [accessKeyID, secretAccessKey, sessionToken, region,]
     AwsLogRetentionOutput:
       type: object
       properties:

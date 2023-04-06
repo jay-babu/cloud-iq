@@ -5,7 +5,11 @@ package oapi
 
 // AwsLogRetentionInput defines model for AwsLogRetentionInput.
 type AwsLogRetentionInput struct {
+	AccessKeyID     string `json:"accessKeyID"`
+	Region          string `json:"region"`
 	RetentionInDays *int32 `json:"retentionInDays,omitempty"`
+	SecretAccessKey string `json:"secretAccessKey"`
+	SessionToken    string `json:"sessionToken"`
 }
 
 // AwsLogRetentionOutput defines model for AwsLogRetentionOutput.
