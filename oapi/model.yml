@@ -1,17 +1,24 @@
 openapi: 3.0.0
 
 info:
-  title: Auto Tune
+  title: Cloud Warden
   description: |
     # Overview
 
-    cloud-warden's job is very simple. It is to clean and optimize cloud resources.
-    This is possible by modifying various cloud services configuration to a more optimal cost
-    such as decreasing retention rates, optimizing requested hardware, enabling on_demand usage.
+    Cloud Warden is a comprehensive service that helps users & businesses optimize their cloud resources and reduce costs.
+    It is a powerful tool that automates resource management and continuously monitors cloud infrastructure to identify areas of inefficiency and potential cost savings.
 
-    Currently, only AWS CloudWatch Log Group Optimization is supported.
+    One of the key features of Cloud-Warden is its ability to identify and eliminate underutilized resources.
+    For example, it can detect and shut down idle virtual machines, reducing unnecessary costs. It can also identify over-provisioned resources and suggest changes to optimize usage.
 
-    # HIGHLY EXPERIMENTAL / ALPHA Stage
+    Cloud Warden can also help businesses improve their overall cloud security by identifying potential security risks and vulnerabilities.
+
+    Overall, Cloud-Warden is a powerful service that can help businesses optimize their cloud resources, reduce costs, and improve security.
+    By automating resource management, it allows businesses to make data-driven decisions about their cloud infrastructure and optimize their usage to achieve the best results.
+
+    Currently, only AWS CloudWatch Log Group optimization is supported with more operations coming in the future.
+
+    ## Experimental / In Development
 
     It is recommended that the AWS Role given to this software contain minimal permission.
     This package is subject to breaking changes at anytime.
@@ -22,9 +29,11 @@ info:
 
     ## How to Use
 
-    This repository is a a backend server.
-
-    Latest Swagger Spec is available at [https://github.com/jay-babu/cloud-warden/blob/main/oapi/todo.yml](https://github.com/jay-babu/cloud-warden/blob/main/oapi/todo.yml)
+    1. Generate AWS Credentials: accessKeyID, secretAccessKey, sessionToken are needed.
+    1. Provide the credentials, region, and request specific parameters in the request body.
+    1. Read operation documentation to learn more about it
+    1. Invoke the operation through a HTTP Request
+    1. Enjoy!
 
     ## Supported Services
     - CloudWatch Log Groups
@@ -35,26 +44,21 @@ info:
     Requests can be made to either of these endpoints.
 
     - [https://cloud-warden-api.pateljay.io](https://cloud-warden-api.pateljay.io)
-    - [https://cloud-warden.onrender.com](https://cloud-warden.onrender.com)
 
     ## Running Locally
-    
+
     Repo Link: [https://github.com/jay-babu/cloud-warden](https://github.com/jay-babu/cloud-warden)
 
-    - Provide accessKeyID, secretAccessKey, region, sessionToken as part of the request body.
     - `./cloud-warden` if downloaded release file
     - `make run` if running from source
     - `make watch` tracks for file changes using `air`
   version: 0.0.0
 
 servers:
-
   - url: https://cloud-warden-api.pateljay.io
-  - url: https://cloud-warden.onrender.com
   - url: http://localhost:8080
 
 components:
-
   schemas:
     AwsLogRetentionInput:
       type: object
@@ -71,14 +75,14 @@ components:
           type: string
         region:
           type: string
-      required: [accessKeyID, secretAccessKey, sessionToken, region,]
+      required: [accessKeyID, secretAccessKey, sessionToken, region]
     AwsLogRetentionOutput:
       type: object
       properties:
         messages:
           type: array
           items:
-            $ref: '#/components/schemas/Message'
+            $ref: "#/components/schemas/Message"
       required: [messages]
     Message:
       type: object
@@ -106,7 +110,6 @@ components:
         - code
         - message
 
-
 paths:
   /aws/log_group/retention:
     post:
@@ -120,16 +123,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AwsLogRetentionInput'
+              $ref: "#/components/schemas/AwsLogRetentionInput"
       responses:
-        '200':
+        "200":
           description: Log Group Retention Saved.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AwsLogRetentionOutput'
-        '400':
+                $ref: "#/components/schemas/AwsLogRetentionOutput"
+        "400":
           description: Bad Request.
-        '5XX':
+        "5XX":
           description: Unexpected error.
-
