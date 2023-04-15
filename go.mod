@@ -1,4 +1,4 @@
-module github.com/jay-babu/auto-tune
+module github.com/jay-babu/cloud-warden
 
 go 1.20
 

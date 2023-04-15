@@ -5,7 +5,7 @@ info:
   description: |
     # Overview
 
-    auto-tune's job is very simple. It is to clean and optimize cloud resources.
+    cloud-warden's job is very simple. It is to clean and optimize cloud resources.
     This is possible by modifying various cloud services configuration to a more optimal cost
     such as decreasing retention rates, optimizing requested hardware, enabling on_demand usage.
 
@@ -24,7 +24,7 @@ info:
 
     This repository is a a backend server.
 
-    Latest Swagger Spec is available at [https://github.com/jay-babu/auto-tune/blob/main/oapi/todo.yml](https://github.com/jay-babu/auto-tune/blob/main/oapi/todo.yml)
+    Latest Swagger Spec is available at [https://github.com/jay-babu/cloud-warden/blob/main/oapi/todo.yml](https://github.com/jay-babu/cloud-warden/blob/main/oapi/todo.yml)
 
     ## Supported Services
     - CloudWatch Log Groups
@@ -34,23 +34,23 @@ info:
 
     Requests can be made to either of these endpoints.
 
-    - [https://auto-tune-api.pateljay.io](https://auto-tune-api.pateljay.io)
-    - [https://auto-tune.onrender.com](https://auto-tune.onrender.com)
+    - [https://cloud-warden-api.pateljay.io](https://cloud-warden-api.pateljay.io)
+    - [https://cloud-warden.onrender.com](https://cloud-warden.onrender.com)
 
     ## Running Locally
     
-    Repo Link: [https://github.com/jay-babu/auto-tune](https://github.com/jay-babu/auto-tune)
+    Repo Link: [https://github.com/jay-babu/cloud-warden](https://github.com/jay-babu/cloud-warden)
 
     - Provide accessKeyID, secretAccessKey, region, sessionToken as part of the request body.
-    - `./auto-tune` if downloaded release file
+    - `./cloud-warden` if downloaded release file
     - `make run` if running from source
     - `make watch` tracks for file changes using `air`
   version: 0.0.0
 
 servers:
 
-  - url: https://auto-tune-api.pateljay.io
-  - url: https://auto-tune.onrender.com
+  - url: https://cloud-warden-api.pateljay.io
+  - url: https://cloud-warden.onrender.com
   - url: http://localhost:8080
 
 components:
