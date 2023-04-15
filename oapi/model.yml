@@ -1,7 +1,7 @@
 openapi: 3.0.0
 
 info:
-  title: Auto Tune
+  title: Cloud Warden
   description: |
     # Overview
 
@@ -11,7 +11,7 @@ info:
 
     Currently, only AWS CloudWatch Log Group Optimization is supported.
 
-    # HIGHLY EXPERIMENTAL / ALPHA Stage
+    ## Experimental / In Development
 
     It is recommended that the AWS Role given to this software contain minimal permission.
     This package is subject to breaking changes at anytime.
@@ -22,9 +22,13 @@ info:
 
     ## How to Use
 
-    This repository is a a backend server.
+    1. Generate AWS Credentials: accessKeyID, secretAccessKey, sessionToken are needed.
+    1. Provide the credentials, region, and request specific parameters in the request body.
+    1. Read operation documentation to learn more about it
+    1. Invoke the operation through a HTTP Request
+    1. Enjoy!
 
-    Latest Swagger Spec is available at [https://github.com/jay-babu/cloud-warden/blob/main/oapi/todo.yml](https://github.com/jay-babu/cloud-warden/blob/main/oapi/todo.yml)
+    Latest Swagger Spec is available at [https://github.com/jay-babu/cloud-warden/blob/main/oapi/model.yml](https://github.com/jay-babu/cloud-warden/blob/main/oapi/model.yml)
 
     ## Supported Services
     - CloudWatch Log Groups
@@ -35,13 +39,11 @@ info:
     Requests can be made to either of these endpoints.
 
     - [https://cloud-warden-api.pateljay.io](https://cloud-warden-api.pateljay.io)
-    - [https://cloud-warden.onrender.com](https://cloud-warden.onrender.com)
 
     ## Running Locally
     
     Repo Link: [https://github.com/jay-babu/cloud-warden](https://github.com/jay-babu/cloud-warden)
 
-    - Provide accessKeyID, secretAccessKey, region, sessionToken as part of the request body.
     - `./cloud-warden` if downloaded release file
     - `make run` if running from source
     - `make watch` tracks for file changes using `air`
@@ -50,7 +52,6 @@ info:
 servers:
 
   - url: https://cloud-warden-api.pateljay.io
-  - url: https://cloud-warden.onrender.com
   - url: http://localhost:8080
 
 components:
