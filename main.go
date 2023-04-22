@@ -11,9 +11,9 @@ import (
 	middleware "github.com/deepmap/oapi-codegen/pkg/gin-middleware"
 
 	"github.com/gin-contrib/cors"
-	"github.com/jay-babu/cloud-warden/aws"
-	"github.com/jay-babu/cloud-warden/log"
-	"github.com/jay-babu/cloud-warden/oapi"
+	"github.com/jay-babu/cloud-iq/aws"
+	"github.com/jay-babu/cloud-iq/log"
+	"github.com/jay-babu/cloud-iq/oapi"
 )
 
 type ServerImpl struct{}

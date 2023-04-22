@@ -1,3 +1,3 @@
-# cloud-warden
+# cloud-iq
 
-http://cloud-warden.pateljay.io/#/
+http://cloud-iq.pateljay.io/#/

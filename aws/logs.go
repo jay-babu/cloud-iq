@@ -10,8 +10,8 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/cloudwatchlogs"
 	"github.com/gin-gonic/gin"
 
-	"github.com/jay-babu/cloud-warden/log"
-	"github.com/jay-babu/cloud-warden/oapi"
+	"github.com/jay-babu/cloud-iq/log"
+	"github.com/jay-babu/cloud-iq/oapi"
 )
 
 func DefaultAwsOldParams() oapi.AwsLogRetentionInput {

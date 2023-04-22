@@ -1,4 +1,4 @@
-module github.com/jay-babu/cloud-warden
+module github.com/jay-babu/cloud-iq
 
 go 1.20
 

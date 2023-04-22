@@ -1,19 +1,19 @@
 openapi: 3.0.0
 
 info:
-  title: Cloud Warden
+  title: Cloud IQ
   description: |
     # Overview
 
-    Cloud Warden is a comprehensive service that helps users & businesses optimize their cloud resources and reduce costs.
+    Cloud IQ is a comprehensive service that helps users & businesses optimize their cloud resources and reduce costs.
     It is a powerful tool that automates resource management and continuously monitors cloud infrastructure to identify areas of inefficiency and potential cost savings.
 
-    One of the key features of Cloud-Warden is its ability to identify and eliminate underutilized resources.
+    One of the key features of Cloud-iq is its ability to identify and eliminate underutilized resources.
     For example, it can detect and shut down idle virtual machines, reducing unnecessary costs. It can also identify over-provisioned resources and suggest changes to optimize usage.
 
-    Cloud Warden can also help businesses improve their overall cloud security by identifying potential security risks and vulnerabilities.
+    Cloud IQ can also help businesses improve their overall cloud security by identifying potential security risks and vulnerabilities.
 
-    Overall, Cloud-Warden is a powerful service that can help businesses optimize their cloud resources, reduce costs, and improve security.
+    Overall, Cloud-iq is a powerful service that can help businesses optimize their cloud resources, reduce costs, and improve security.
     By automating resource management, it allows businesses to make data-driven decisions about their cloud infrastructure and optimize their usage to achieve the best results.
 
     Currently, only AWS CloudWatch Log Group optimization is supported with more operations coming in the future.
@@ -43,19 +43,19 @@ info:
 
     Requests can be made to either of these endpoints.
 
-    - [https://cloud-warden-api.pateljay.io](https://cloud-warden-api.pateljay.io)
+    - [https://cloud-iq-api.pateljay.io](https://cloud-iq-api.pateljay.io)
 
     ## Running Locally
 
-    Repo Link: [https://github.com/jay-babu/cloud-warden](https://github.com/jay-babu/cloud-warden)
+    Repo Link: [https://github.com/jay-babu/cloud-iq](https://github.com/jay-babu/cloud-iq)
 
-    - `./cloud-warden` if downloaded release file
+    - `./cloud-iq` if downloaded release file
     - `make run` if running from source
     - `make watch` tracks for file changes using `air`
   version: 0.0.0
 
 servers:
-  - url: https://cloud-warden-api.pateljay.io
+  - url: https://cloud-iq-api.pateljay.io
   - url: http://localhost:8080
 
 components:
